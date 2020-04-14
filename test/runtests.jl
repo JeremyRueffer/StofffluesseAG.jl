@@ -7,7 +7,7 @@
 # Institut für Agrarklimaschutz
 # Julia 1.4.0
 # 02.04.2020
-# Last Edit: 02.04.2020
+# Last Edit: 09.04.2020
 
 using StofffluesseAG
 using Test
@@ -52,6 +52,7 @@ println("\n\n")
     x = [1.0,NaN,3.0,2.0]
     @test 1.0 == nanmin(x) || "NANMIN: nanmin([1.0,NaN,3.0,4.0]) output incorrect, should be 1.0"
     @test 3.0 == nanmax(x) || "NANMAX: nanmax([1.0,NaN,3.0,4.0]) output incorrect, should be 3.0"
+    @test 1.0 == nanstd(x) || "NANSTD: nanstd([1.0,NaN,3.0,4.0]) output incorrect, should be 1.0"
     @test 2.0 == nanmean(x) || "NANMEAN: nanmean([1.0,NaN,3.0,4.0]) output incorrect, should be 2.0"
 end
 println("\n\n")

@@ -8,7 +8,7 @@
 # Institut für Agrarklimaschutz
 # Julia 1.4.0
 # 02.04.2020
-# Last Edit: 02.04.2020
+# Last Edit: 09.04.2020
 
 __precompile__(true)
 
@@ -66,6 +66,7 @@ export work_hours,
 		nanmin,
 		nanmax,
 		nanmean,
+		nanstd,
 		nCLD_ErrorsWarnings,
 		nCLD_Status,
 		sbf_read,
@@ -79,6 +80,7 @@ dir = splitdir(@__FILE__)[1]
 include(joinpath(dir,"dirlist.jl"))
 include(joinpath(dir,"work_hours.jl"))
 include(joinpath(dir,"nanmean.jl"))
+include(joinpath(dir,"nanstd.jl"))
 include(joinpath(dir,"nanmin.jl"))
 include(joinpath(dir,"nanmax.jl"))
 include(joinpath(dir,"timestamp.jl"))
