@@ -6,9 +6,9 @@
 # Thünen Institut
 # Institut für Agrarklimaschutz
 # Junior Research Group NITROSPHERE
-# Julia 1.3.1
+# Julia 1.4.2
 # 03.02.2020
-# Last Edit: 11.02.2020
+# Last Edit: 14.07.2020
 
 #include("/home/jeremy/BF-Eddy/Code/Julia/Jeremy/nCLD.jl")
 
@@ -45,11 +45,11 @@ mutable struct nCLD_Status
 	
 	# Constructor for nCLD_Status type
 	function nCLD_Status(status::Float64)
-		nCLD_Status(Int(status))
+		nCLD_Status(UInt(status))
 	end # End nCLD_Status(status::Float64)
 	
 	# Constructor for nCLD_Status type
-	function nCLD_Status(status::Int)
+	function nCLD_Status(status::UInt)
 		# Byte 1
 		ScrubberHeating = status & 2^(1-1) > 0
 		ReactorChamberHeating = status & 2^(2-1) > 0
@@ -161,11 +161,16 @@ mutable struct nCLD_ErrorsWarnings
 	
 	# Constructor for nCLD_ErrorsWarnings type
 	function nCLD_ErrorsWarnings(status::Float64)
-		nCLD_ErrorsWarnings(Int(status))
+		nCLD_ErrorsWarnings(UInt(status))
 	end # End nCLD_ErrorsWarnings(status::Float64)
 	
 	# Constructor for nCLD_ErrorsWarnings type
-	function nCLD_ErrorsWarnings(status::Int)
+	function nCLD_ErrorsWarnings(status::String)
+		nCLD_ErrorsWarnings(parse(UInt,"0x" * status))
+	end # End nCLD_ErrorsWarnings(status::String)
+	
+	# Constructor for nCLD_ErrorsWarnings type
+	function nCLD_ErrorsWarnings(status::UInt)
 		# Byte 1: Errors
 		SetupCalDataLost = status & 2^(1-1) > 0
 		VacuumFailure = status & 2^(2-1) > 0
@@ -212,7 +217,7 @@ end # End of type
 
 function Base.show(io::IO, x::nCLD_ErrorsWarnings)
 	# No Errors or Warnings at all?
-	if x.SetupCalDataLost || x.VacuumFailure || x.SensorMalfunction || x.ScrubberHeatingFailure || x.OzonatorHighVoltageFailure || x.BypassPressureOutOfRange || x.FlowSensorNotCalibrated || x.PeltierCoolerFailure || x.ConverterHeatingFailure || x.ReactorHeatingFailure || x.TubingHeatingFailure || x.SampleCalFlowOutOfRange || x.HardwareTypeChanged || x.CalibrationError || x.InletPressureO3OutOfRange || x.PMTError || x.ConverterLifetime || x.PumpMaintenance || x.InstrumentTemperatureTooLow || x.InstrumentTemperatureTooHigh || x.BypassOutOfRange || x.InletPressureO3TooLow || x.RangeAOverflow || x.OzoneNotConstant || x.RangeBOverflow == false
+	if x.SetupCalDataLost | x.VacuumFailure | x.SensorMalfunction | x.ScrubberHeatingFailure | x.OzonatorHighVoltageFailure | x.BypassPressureOutOfRange | x.FlowSensorNotCalibrated | x.PeltierCoolerFailure | x.ConverterHeatingFailure | x.ReactorHeatingFailure | x.TubingHeatingFailure | x.SampleCalFlowOutOfRange | x.HardwareTypeChanged | x.CalibrationError | x.InletPressureO3OutOfRange | x.PMTError | x.ConverterLifetime | x.PumpMaintenance | x.InstrumentTemperatureTooLow | x.InstrumentTemperatureTooHigh | x.BypassOutOfRange | x.InletPressureO3TooLow | x.RangeAOverflow | x.OzoneNotConstant | x.RangeBOverflow == false
 		println("No errors or warnings.")
 	else
 		# Byte 1: Errors
