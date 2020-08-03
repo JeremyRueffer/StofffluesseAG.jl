@@ -5,12 +5,13 @@
 # Jeremy Rüffer
 # Thünen Institut
 # Institut für Agrarklimaschutz
-# Julia 1.4.0
+# Julia 1.5.0
 # 02.04.2020
-# Last Edit: 09.04.2020
+# Last Edit: 03.08.2020
 
 using StofffluesseAG
 using Test
+using Dates
 
 println("\n=======================================================")
 println("============  StofffluesseAG Module Tests  ============")

@@ -6,9 +6,9 @@
 # Thünen Institut
 # Institut für Agrarklimaschutz
 # Junior Research Group NITROSPHERE
-# Julia 1.4.2
+# Julia 1.5.0
 # 03.02.2020
-# Last Edit: 14.07.2020
+# Last Edit: 03.08.2020
 
 #include("/home/jeremy/BF-Eddy/Code/Julia/Jeremy/nCLD.jl")
 
@@ -47,6 +47,9 @@ mutable struct nCLD_Status
 	function nCLD_Status(status::Float64)
 		nCLD_Status(UInt(status))
 	end # End nCLD_Status(status::Float64)
+	function nCLD_Status(status::Int64)
+		nCLD_Status(UInt(status))
+	end # End nCLD_Status(status::Int64)
 	
 	# Constructor for nCLD_Status type
 	function nCLD_Status(status::UInt)
