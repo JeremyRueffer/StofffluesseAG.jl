@@ -14,4 +14,6 @@ nanmin(x::Array{T}) where T <: Number = minimum(filter(!isnan,x))
 
 nanmin(x::Array{Union{T,Missing}}) where T <: Number = minimum(filter(!isnan,filter(!ismissing,x)))
 
-nanmin(x::Array{T},y::Integer) where T <: Number = mapslices(nanmin,x,dims=y)
+function nanmin(x::Matrix{T},y::Integer) where T Union{S, Union{S, Missing}} where S <: Number
+  return mapslices(nanmin,x,dims=y)
+end
