@@ -14,4 +14,6 @@ nanmax(x::Array{T}) where T <: Number = maximum(filter(!isnan,x))
 
 nanmax(x::Array{Union{T,Missing}}) where T <: Number = maximum(filter(!isnan,filter(!ismissing,x)))
 
-nanmax(x::Array{T},y::Integer) where T <: Number = mapslices(nanmax,x,dims=y)
+function nanmax(x::Matrix{T},y::Integer) where T Union{S, Union{S, Missing}} where S <: Number
+  return mapslices(nanmax,x,dims=y)
+end
