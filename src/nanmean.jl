@@ -14,6 +14,6 @@ nanmean(x::Array{T}) where T <: Number = mean(filter(!isnan,x))
 
 nanmean(x::Array{Union{T,Missing}}) where T <: Number = mean(filter(!isnan,filter(!ismissing,x)))
 
-nanmean(x::Array{T},y::Integer) where T <: Number = mean(filter(!isnan,x,y))
-
-nanmean(x::Array{Union{T,Missing}},y::Integer) where T <: Number = mapslices(nanmean,x,dims=y)
+function nanmean(x::Array{Union{T,Missing}},y::Integer) where T Union{S, Union{S, Missing}} where S <: Number
+    return mapslices(nanmean,x,dims=y)
+end
