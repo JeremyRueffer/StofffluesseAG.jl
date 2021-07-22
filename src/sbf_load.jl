@@ -6,9 +6,9 @@
 # Thünen Institut
 # Institut für Agrarklimaschutz
 # Junior Research Group NITROSPHERE
-# Julia 1.2.0
+# Julia 1.6.1
 # 25.01.2018
-# Last Edit: 02.04.2020
+# Last Edit: 22.07.2021
 
 # A Labview string will have a four byte dimension array before the actual data
 # s = String(read(fid,UInt8,5))
@@ -246,7 +246,8 @@ function sbf_load(src::String;verbose::Bool=false,veryverbose::Bool=false)
 	#################
 	##  Load Data  ##
 	#################
-	d = DataFrame(types,Symbol[Symbol(i) for i in cols],lcount,makeunique=true) # Preallocate dataframe
+	#d = DataFrame(types,Symbol[Symbol(i) for i in cols],lcount,makeunique=true) # Preallocate dataframe
+	d = DataFrame(Symbol[Symbol(i) for i in cols] .=> [Vector{T}(undef, lcount) for T in types],makeunique=true) # Preallocate dataframe
 	
 	colcount = length(cols)
 	for i=1:lcount
