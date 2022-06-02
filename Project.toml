@@ -1,7 +1,7 @@
 name = "StofffluesseAG"
 uuid = "e62be84d-68e5-4cf1-a579-2ff79db78b2b"
 authors = ["Jeremy Rüffer"]
-version = "0.1.7"
+version = "0.1.8"
 
 [deps]
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
