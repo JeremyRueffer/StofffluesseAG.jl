@@ -6,9 +6,9 @@
 # Thünen Institut
 # Institut für Agrarklimaschutz
 # Junior Research Group NITROSPHERE
-# Julia 1.6.1
+# Julia 1.7.0
 # 25.01.2018
-# Last Edit: 22.07.2021
+# Last Edit: 02.06.2022
 
 # A Labview string will have a four byte dimension array before the actual data
 # s = String(read(fid,UInt8,5))
@@ -259,7 +259,7 @@ function sbf_load(src::String;verbose::Bool=false,veryverbose::Bool=false)
 	
 	# Completeness Check
 	if !eof(fid)
-		warn("\t" * src * " was closed early")
+		@warn("\t" * src * " was closed early")
 	end
 	
 	close(fid)
