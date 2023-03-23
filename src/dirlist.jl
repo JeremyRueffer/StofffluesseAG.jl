@@ -4,9 +4,9 @@
 # Thünen Institut
 # Institut für Agrarklimaschutz
 # Junior Research Group NITROSPHERE
-# Julia 1.4.0
+# Julia 1.8.5
 # Created: 01.11.2013
-# Last Edit: 01.04.2020
+# Last Edit: 23.03.2023
 
 """# dirlist(directory::ASCIIString;recur_depth::Int,regular_expression::Regex)
 
@@ -49,7 +49,7 @@
 * basename
 * dirname"""
 function dirlist(directory::String;args...) #function dirlist{T <: String}(directory::Vector{T};args...)
-    return dirlist([directory];args...)
+	return dirlist([directory];args...)
 end
 
 #function dirlist{T <: String}(directories::Array{T,1};recur=typemax(Int),regex=r"")
@@ -63,9 +63,9 @@ function dirlist(directories::Array{T,1};recur::Int=typemax(Int),regex::Regex=r"
 	# r"(example)" # Search for all files with "example" in the name
 	# r"\.jl$" # Search for .jl at the end of the file. The . must be escaped with a \
 	
-    # Parse Inputs
-    rcr_max = Int[]
-    try
+	# Parse Inputs
+	rcr_max = Int[]
+	try
 		rcr_max = Int(recur)
 	catch e
 		error("recur must be convertable to Int")
@@ -85,12 +85,23 @@ function dirlist(directories::Array{T,1};recur::Int=typemax(Int),regex::Regex=r"
 		for i=1:1:length(directories)
 			lst = Vector{String}() # Reset the file list each cycle
 			try # May fail on certain folders like K:\__Papierkorb__\
-				lst = joinpath.(directories[i],readdir(directories[i])) # List contents of specified directory and reformat
+				lst = readdir(directories[i],join=true,sort=true) # List contents of specified directory and reformat
 			catch
 				println("FAILED READING " * directories[i])
 				println("Continuing...")
 			end
-			fDirs = isdir.(lst)
+			
+			# Check for directories
+			if Sys.iswindows()
+				fDirs = fill!(Array{Bool}(undef,length(lst)),false)  # Preallocate answers
+				for j=1:1:length(lst)
+					if isempty(splitext(lst[j])[2])
+						fDirs[j] = isdir(lst[j])
+					end
+				end
+			else
+				fDirs = isdir.(lst)
+			end
 			
 			append!(flist,lst[fDirs .== false]) # Add the new files
 			append!(dlist,lst[fDirs]) # Add the new directories
@@ -100,10 +111,10 @@ function dirlist(directories::Array{T,1};recur::Int=typemax(Int),regex::Regex=r"
 		rcr += 1 # Next level of recursion
 	end
 	
-    if regex != r""
+	if regex != r""
 		# Find specific files if regular expression exists
 		filter!(x -> occursin(regex,x),flist)
 	end
 	
-    return flist,dlist # Return the results of the file and directory listing
+	return flist,dlist # Return the results of the file and directory listing
 end
